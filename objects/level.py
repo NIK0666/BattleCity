@@ -9,15 +9,17 @@ from objects.spawn_anim import SpawnAnimation
 class Level(Sprite):
     """Класс уровня"""
 
-    def __init__(self, config, surfaces_config, controller):
+    def __init__(self, config, controller):
         super(Level, self).__init__()
         self.config = config
-        self.surfaces_config = surfaces_config
+        self.surfaces_config = controller.surfaces_config
         self.controller = controller
+        self.screen = self.controller.screen
         self.caption = config["MAP"]["Caption"]
         self.map = Group()
         self.map_back = Group()
         self.animations = Group()
+        self.bullets = Group()
         self.grid = []
         self.player_spawn = (0, 0)
         self.enemy_spawn_points = []
@@ -44,7 +46,7 @@ class Level(Sprite):
                     pt = self.__get_point(row, col)
                     self.enemy_spawn_points.append(self.__get_point(row, col))
 
-                    spawn_animation = SpawnAnimation(self.controller.screen)
+                    spawn_animation = SpawnAnimation(self.screen)
                     spawn_animation.pt = pt
                     self.animations.add(spawn_animation)
                 # Строим карту
@@ -52,7 +54,7 @@ class Level(Sprite):
                     self.__create_surface(surface_type, row, col)
 
     def __create_surface(self, surface_type, row, col):
-        surface = Surface(self.__get_surface_model(surface_type), self.controller.screen)
+        surface = Surface(self.__get_surface_model(surface_type), self.screen)
         pt = self.__get_point(row, col)
         surface.rect.x = pt[0]
         surface.rect.y = pt[1]
@@ -68,6 +70,12 @@ class Level(Sprite):
     def __get_surface_model(self, surface_type):
         return self.surfaces_config[self.surfaces_config['DEFAULT'][surface_type]]
 
+    def update(self):
+        for bullet in self.bullets.sprites():
+            bullet.update()
+        self.controller.player.update()
+
+
     def render(self):
         for animation in self.animations.sprites():
             animation.render()
@@ -75,7 +83,9 @@ class Level(Sprite):
         for surface in self.map_back.sprites():
             surface.render()
 
-        self.controller.player.update()
+        for bullet in self.bullets.sprites():
+            bullet.render()
+
         self.controller.player.render()
 
         for surface in self.map.sprites():

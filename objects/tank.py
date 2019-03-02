@@ -2,6 +2,7 @@ import pygame
 
 from pygame.sprite import Sprite
 from enums.control_enums import MoveDirection
+from objects.bullet import Bullet
 
 
 class Tank(Sprite):
@@ -11,6 +12,7 @@ class Tank(Sprite):
         """Конфигурация танка находится в конфиг файле, тут только логика"""
         super(Tank, self).__init__()
         self.controller = controller
+        self.bullet_model = controller.bullets_config[config['DEFAULT']['Bullet']]
 
         # Загрузка изображения танка и назначение атрибута rect
         path = "res/" + config['DEFAULT']['Image']
@@ -43,11 +45,11 @@ class Tank(Sprite):
         self.pos_y = float(self.rect.y)
 
     def move(self, direction):
-        if not self.direction == MoveDirection.NONE:
-            self.see_direction = self.direction
+        if not direction == MoveDirection.NONE:
+            self.see_direction = direction
         self.direction = direction
 
-        if not direction == MoveDirection.NONE and not self.direction == self.see_direction:
+        if not direction == MoveDirection.NONE:
             # Скорректируем позицию
 
             if direction == MoveDirection.LEFT or direction == MoveDirection.RIGHT:
@@ -69,6 +71,7 @@ class Tank(Sprite):
 
     def fire(self):
         print("FIRE!!!")
+        Bullet(self.bullet_model, self, self.controller)
 
     def render(self):
         self.controller.screen.blit(self.image, self.rect)

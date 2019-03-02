@@ -19,8 +19,12 @@ class GameController:
         self.dt = 0
 
         # Получаем конфиг поверхностей
-        surfaces_config = configparser.ConfigParser()
-        surfaces_config.read("configs/surface.ini")
+        self.surfaces_config = configparser.ConfigParser()
+        self.surfaces_config.read("configs/surfaces.ini")
+
+        # Получаем конфиг пуль
+        self.bullets_config = configparser.ConfigParser()
+        self.bullets_config.read("configs/bullets.ini")
 
         # Создаем танк игрока
         player_config = configparser.ConfigParser()
@@ -33,7 +37,7 @@ class GameController:
         # Создаем уровень
         level_config = configparser.ConfigParser()
         level_config.read("configs/" + self.levels[0] + ".ini")
-        self.current_level = Level(level_config, surfaces_config, self)
+        self.current_level = Level(level_config, self)
 
         # Запускаем цикл обновления
         self.__game_loop()
@@ -52,6 +56,7 @@ class GameController:
 
     def __update_screen(self):
         self.screen.fill((0, 0, 0))
+        self.current_level.update()
         self.current_level.render()
         pygame.display.flip()
 
