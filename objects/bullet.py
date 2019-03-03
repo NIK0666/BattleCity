@@ -50,13 +50,16 @@ class Bullet(Sprite):
         self.rect.y = self.pos_y
 
         # Проверяем коллизию
-        self.__check_collision()
+        # self.__check_collision()
 
     def render(self):
         self.level.screen.blit(self.image, self.rect)
 
-    def __check_collision(self):
-        collisions = pygame.sprite.spritecollideany(self, self.controller.current_level.map)
-        if collisions:
-            # Удаляем саму пулю
-            self.controller.current_level.bullets.remove(self)
+    # def __check_collision(self):
+        # surface = pygame.sprite.spritecollideany(self, self.controller.current_level.map)
+        # if surface:
+        #     # Обрабатываем столкновение с поверхностью
+        #     # surface.hit(self)
+        #     # Удаляем саму пулю
+        #     self.controller.current_level.bullets.remove(self)
+
