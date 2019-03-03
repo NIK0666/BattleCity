@@ -26,7 +26,27 @@ class Level(Sprite):
 
         self.__build_map()
 
+    def update(self):
+        for bullet in self.bullets.sprites():
+            bullet.update()
+        self.controller.player.update()
 
+        self.__check_collisions()
+
+    def render(self):
+        for animation in self.animations.sprites():
+            animation.render()
+
+        for surface in self.map_back.sprites():
+            surface.render()
+
+        for bullet in self.bullets.sprites():
+            bullet.render()
+
+        self.controller.player.render()
+
+        for surface in self.map.sprites():
+            surface.render()
 
     def __build_map(self):
         """Создание карты на основе конфига"""
@@ -63,30 +83,17 @@ class Level(Sprite):
         else:
             self.map_back.add(surface)
 
+    def __check_collisions(self):
+        collisions = pygame.sprite.groupcollide(self.bullets, self.map, True, False)
+        if collisions:
+            for bullet, surfaces in collisions.items():
+                for surface in surfaces:
+                    if surface.is_destructible:
+                        self.map.remove(surface)
+
     @classmethod
     def __get_point(cls, row, col):
         return 64 * col, 64 * row
 
     def __get_surface_model(self, surface_type):
         return self.surfaces_config[self.surfaces_config['DEFAULT'][surface_type]]
-
-    def update(self):
-        for bullet in self.bullets.sprites():
-            bullet.update()
-        self.controller.player.update()
-
-
-    def render(self):
-        for animation in self.animations.sprites():
-            animation.render()
-
-        for surface in self.map_back.sprites():
-            surface.render()
-
-        for bullet in self.bullets.sprites():
-            bullet.render()
-
-        self.controller.player.render()
-
-        for surface in self.map.sprites():
-            surface.render()
