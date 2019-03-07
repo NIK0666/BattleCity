@@ -1,2 +1,5 @@
 objects/__pycache__
 objects/__pycache__/
+controllers/__pycache__/
+enums/__pycache__/
+helpers/__pycache__/helper_classes.cpython-37.pyc
