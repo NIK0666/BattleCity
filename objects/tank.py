@@ -84,19 +84,3 @@ class Tank(GameObject):
         self.pos.y += _y * self.controller.dt
 
         super(Tank, self).update()
-
-        self.__check_collision()
-
-    def __check_collision(self):
-        collisions = pygame.sprite.spritecollideany(self, self.controller.current_level.map)
-        if collisions:
-            if self.direction == MoveDirection.UP:
-                self.pos.y = collisions.rect.y + collisions.rect.height
-            elif self.direction == MoveDirection.DOWN:
-                self.pos.y = collisions.rect.y - collisions.rect.height
-            elif self.direction == MoveDirection.LEFT:
-                self.pos.x = collisions.rect.x + collisions.rect.width
-            elif self.direction == MoveDirection.RIGHT:
-                self.pos.x = collisions.rect.x - collisions.rect.width
-            self.rect.x = int(self.pos.x)
-            self.rect.y = int(self.pos.y)
