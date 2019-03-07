@@ -3,7 +3,9 @@ import pygame
 from pygame.sprite import Sprite
 from pygame.sprite import Group
 from objects.surface import Surface
+from objects.surface import SurfaceCell
 from objects.spawn_anim import SpawnAnimation
+import helpers.helper_functions as helpers
 
 
 class Level(Sprite):
@@ -27,13 +29,13 @@ class Level(Sprite):
         self.__build_map()
 
     def update(self):
+        """Обновление состояний объектов уровня"""
         for bullet in self.bullets.sprites():
             bullet.update()
         self.controller.player.update()
 
-        self.__check_collisions()
-
     def render(self):
+        """Отрисовка уровня"""
         for animation in self.animations.sprites():
             animation.render()
 
@@ -48,6 +50,27 @@ class Level(Sprite):
         for surface in self.map.sprites():
             surface.render()
 
+    def destruct_cell(self, surface, bullet):
+        self.map.remove(surface)
+        if surface.health == 4:
+            # делим на 4 штуки
+            # TODO надо будет переделать, чтобы не создавались блоки если rect пересекается с пулей
+            c1 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 0)
+            c2 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 1)
+            c3 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 0)
+            c4 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 1)
+
+            if pygame.sprite.collide_rect(c1, bullet):
+                self.map.remove(c1)
+            if pygame.sprite.collide_rect(c2, bullet):
+                self.map.remove(c2)
+            if pygame.sprite.collide_rect(c3, bullet):
+                self.map.remove(c3)
+            if pygame.sprite.collide_rect(c4, bullet):
+                self.map.remove(c4)
+
+        self.bullets.remove(bullet)
+
     def __build_map(self):
         """Создание карты на основе конфига"""
         # Распарсим из конфига в двумерный массив
@@ -59,12 +82,12 @@ class Level(Sprite):
                 surface_type = self.grid[row][col]
                 # Точка спавна игрока
                 if surface_type == "p":
-                    self.player_spawn = self.__get_point(row, col)
+                    self.player_spawn = helpers.get_point(row, col)
                     self.controller.player.set_pos(self.player_spawn[0], self.player_spawn[1])
                 # Точка спавна врагов
                 elif surface_type == "s":
-                    pt = self.__get_point(row, col)
-                    self.enemy_spawn_points.append(self.__get_point(row, col))
+                    pt = helpers.get_point(row, col)
+                    self.enemy_spawn_points.append(helpers.get_point(row, col))
 
                     spawn_animation = SpawnAnimation(self.screen)
                     spawn_animation.pt = pt
@@ -74,8 +97,9 @@ class Level(Sprite):
                     self.__create_surface(surface_type, row, col)
 
     def __create_surface(self, surface_type, row, col):
+        """Создание 'клетки' карты"""
         surface = Surface(self.__get_surface_model(surface_type), self.screen)
-        pt = self.__get_point(row, col)
+        pt = helpers.get_point(row, col)
         surface.rect.x = pt[0]
         surface.rect.y = pt[1]
         if surface.is_blocks_movement:
@@ -83,17 +107,18 @@ class Level(Sprite):
         else:
             self.map_back.add(surface)
 
-    def __check_collisions(self):
-        collisions = pygame.sprite.groupcollide(self.bullets, self.map, True, False)
-        if collisions:
-            for bullet, surfaces in collisions.items():
-                for surface in surfaces:
-                    if surface.is_destructible:
-                        self.map.remove(surface)
-
-    @classmethod
-    def __get_point(cls, row, col):
-        return 64 * col, 64 * row
+    def __create_surface_cell(self, surface_model, row, col, subrow, subcol):
+        """Создание 'клетки' карты"""
+        surface = SurfaceCell(surface_model, self.screen, subrow * 1 + subcol * 2 + 1)
+        pt = helpers.get_point(row, col, subrow, subcol)
+        surface.rect.x = pt[0]
+        surface.rect.y = pt[1]
+        if surface.is_blocks_movement:
+            self.map.add(surface)
+        else:
+            self.map_back.add(surface)
+        return surface
 
     def __get_surface_model(self, surface_type):
+        """Получение данных о типе поверхности"""
         return self.surfaces_config[self.surfaces_config['DEFAULT'][surface_type]]
