@@ -4,6 +4,7 @@ from pygame.sprite import Sprite
 from pygame.sprite import Group
 from objects.surface import Surface
 from objects.spawn_anim import SpawnAnimation
+import helpers.helper_functions as helpers
 
 
 class Level(Sprite):
@@ -61,12 +62,12 @@ class Level(Sprite):
                 surface_type = self.grid[row][col]
                 # Точка спавна игрока
                 if surface_type == "p":
-                    self.player_spawn = self.__get_point(row, col)
+                    self.player_spawn = helpers.get_point(row, col)
                     self.controller.player.set_pos(self.player_spawn[0], self.player_spawn[1])
                 # Точка спавна врагов
                 elif surface_type == "s":
-                    pt = self.__get_point(row, col)
-                    self.enemy_spawn_points.append(self.__get_point(row, col))
+                    pt = helpers.get_point(row, col)
+                    self.enemy_spawn_points.append(helpers.get_point(row, col))
 
                     spawn_animation = SpawnAnimation(self.screen)
                     spawn_animation.pt = pt
@@ -78,7 +79,7 @@ class Level(Sprite):
     def __create_surface(self, surface_type, row, col):
         """Создание 'клетки' карты"""
         surface = Surface(self.__get_surface_model(surface_type), self.screen)
-        pt = self.__get_point(row, col)
+        pt = helpers.get_point(row, col)
         surface.rect.x = pt[0]
         surface.rect.y = pt[1]
         if surface.is_blocks_movement:
@@ -95,12 +96,6 @@ class Level(Sprite):
                 for surface in surfaces:
                     if surface.is_destructible:
                         self.map.remove(surface)
-
-    @classmethod
-    def __get_point(cls, row, col):
-        """Получение точки по row col
-        TODO возможно перенести в отдельный helper"""
-        return 64 * col, 64 * row
 
     def __get_surface_model(self, surface_type):
         """Получение данных о типе поверхности"""
