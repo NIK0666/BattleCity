@@ -36,6 +36,7 @@ class Tank(Sprite):
         self.see_direction = MoveDirection.UP
 
     def set_pos(self, _x, _y):
+        """Задает позицию танка на уровне"""
         # Начальная координата танка
         self.rect.x = _x
         self.rect.y = _y
@@ -45,6 +46,7 @@ class Tank(Sprite):
         self.pos_y = float(self.rect.y)
 
     def move(self, direction):
+        """Смещает танк в заданном направлении"""
         if not direction == MoveDirection.NONE:
             self.see_direction = direction
         self.direction = direction
@@ -70,13 +72,15 @@ class Tank(Sprite):
             self.image = pygame.transform.rotate(self.original_image, angle)
 
     def fire(self):
-        print("FIRE!!!")
+        """Производит выстрел в сторону направления танка"""
         Bullet(self.bullet_model, self, self.controller)
 
     def render(self):
+        """Отрисовывает танк"""
         self.controller.screen.blit(self.image, self.rect)
 
     def update(self):
+        """Обновляет позицию, вызывает проверку коллизий"""
         offset = {
             MoveDirection.LEFT: (-self.speed, 0),
             MoveDirection.RIGHT: (self.speed, 0),

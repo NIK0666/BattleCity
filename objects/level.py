@@ -27,6 +27,7 @@ class Level(Sprite):
         self.__build_map()
 
     def update(self):
+        """Обновление состояний объектов уровня"""
         for bullet in self.bullets.sprites():
             bullet.update()
         self.controller.player.update()
@@ -34,6 +35,7 @@ class Level(Sprite):
         self.__check_collisions()
 
     def render(self):
+        """Отрисовка уровня"""
         for animation in self.animations.sprites():
             animation.render()
 
@@ -74,6 +76,7 @@ class Level(Sprite):
                     self.__create_surface(surface_type, row, col)
 
     def __create_surface(self, surface_type, row, col):
+        """Создание 'клетки' карты"""
         surface = Surface(self.__get_surface_model(surface_type), self.screen)
         pt = self.__get_point(row, col)
         surface.rect.x = pt[0]
@@ -84,6 +87,8 @@ class Level(Sprite):
             self.map_back.add(surface)
 
     def __check_collisions(self):
+        """Проверка коллизий
+        TODO возможно перенести в controller"""
         collisions = pygame.sprite.groupcollide(self.bullets, self.map, True, False)
         if collisions:
             for bullet, surfaces in collisions.items():
@@ -93,7 +98,10 @@ class Level(Sprite):
 
     @classmethod
     def __get_point(cls, row, col):
+        """Получение точки по row col
+        TODO возможно перенести в отдельный helper"""
         return 64 * col, 64 * row
 
     def __get_surface_model(self, surface_type):
+        """Получение данных о типе поверхности"""
         return self.surfaces_config[self.surfaces_config['DEFAULT'][surface_type]]
