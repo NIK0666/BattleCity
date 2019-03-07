@@ -7,6 +7,7 @@ class GameObject(Sprite):
     """Класс отображаемых объектов"""
     rect: Rect = None
     image = None
+    pos = None
 
     def __init__(self, screen, image_name=None):
         super(GameObject, self).__init__()
@@ -16,6 +17,9 @@ class GameObject(Sprite):
             self.rect = self.image.get_rect()
 
     def update(self):
+        if self.pos:
+            self.rect.x = self.pos.x
+            self.rect.y = self.pos.y
         pass
 
     def render(self):

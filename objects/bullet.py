@@ -2,6 +2,7 @@ import pygame
 
 from objects.game_object import GameObject
 from enums.control_enums import MoveDirection
+from helpers.helper_classes import Pos
 
 
 class Bullet(GameObject):
@@ -36,15 +37,13 @@ class Bullet(GameObject):
             self.rect.centery = owner.rect.centery
             self.offset = float(model['Speed']), 0
 
-        self.pos_x = float(self.rect.x)
-        self.pos_y = float(self.rect.y)
+        self.pos = Pos(self.rect.x, self.rect.y)
 
     def update(self):
         # Обновляем позицию пули
-        self.pos_x += self.offset[0] * self.controller.dt
-        self.pos_y += self.offset[1] * self.controller.dt
-        self.rect.x = self.pos_x
-        self.rect.y = self.pos_y
+        self.pos.x += self.offset[0] * self.controller.dt
+        self.pos.y += self.offset[1] * self.controller.dt
+        super(Bullet, self).update()
 
         # Проверяем коллизию
         # self.__check_collision()

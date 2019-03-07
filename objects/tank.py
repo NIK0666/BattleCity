@@ -2,6 +2,7 @@ import pygame
 
 from objects.game_object import GameObject
 from enums.control_enums import MoveDirection
+from helpers.helper_classes import Pos
 
 
 class Tank(GameObject):
@@ -21,8 +22,7 @@ class Tank(GameObject):
         self.rect.y = 0
 
         # Позиция с дробными значениями
-        self.pos_x = float(self.rect.x)
-        self.pos_y = float(self.rect.y)
+        self.pos = Pos(self.rect.x, self.rect.y)
 
         # Скорость танка
         self.speed = float(config['DEFAULT']['Speed'])
@@ -38,8 +38,8 @@ class Tank(GameObject):
         self.rect.y = _y
 
         # Позиция с дробными значениями
-        self.pos_x = float(self.rect.x)
-        self.pos_y = float(self.rect.y)
+        self.pos.x = float(self.rect.x)
+        self.pos.y = float(self.rect.y)
 
     def move(self, direction):
         """Смещает танк в заданном направлении"""
@@ -52,10 +52,10 @@ class Tank(GameObject):
 
             if direction == MoveDirection.LEFT or direction == MoveDirection.RIGHT:
                 # Поправим Y координату
-                self.pos_y = 32 * round(self.pos_y / 32)
+                self.pos.y = 32 * round(self.pos.y / 32)
             else:
                 # Поправим X координату
-                self.pos_x = 32 * round(self.pos_x / 32)
+                self.pos.x = 32 * round(self.pos.x / 32)
 
             # Повернем текстуру относительно выбранного направления
             choice = {
@@ -80,11 +80,10 @@ class Tank(GameObject):
             MoveDirection.DOWN: (0, self.speed)
         }
         (_x, _y) = offset.get(self.direction, (0, 0))
-        self.pos_x += _x * self.controller.dt
-        self.pos_y += _y * self.controller.dt
+        self.pos.x += _x * self.controller.dt
+        self.pos.y += _y * self.controller.dt
 
-        self.rect.x = int(self.pos_x)
-        self.rect.y = int(self.pos_y)
+        super(Tank, self).update()
 
         self.__check_collision()
 
@@ -92,12 +91,12 @@ class Tank(GameObject):
         collisions = pygame.sprite.spritecollideany(self, self.controller.current_level.map)
         if collisions:
             if self.direction == MoveDirection.UP:
-                self.pos_y = collisions.rect.y + collisions.rect.height
+                self.pos.y = collisions.rect.y + collisions.rect.height
             elif self.direction == MoveDirection.DOWN:
-                self.pos_y = collisions.rect.y - collisions.rect.height
+                self.pos.y = collisions.rect.y - collisions.rect.height
             elif self.direction == MoveDirection.LEFT:
-                self.pos_x = collisions.rect.x + collisions.rect.width
+                self.pos.x = collisions.rect.x + collisions.rect.width
             elif self.direction == MoveDirection.RIGHT:
-                self.pos_x = collisions.rect.x - collisions.rect.width
-            self.rect.x = int(self.pos_x)
-            self.rect.y = int(self.pos_y)
+                self.pos.x = collisions.rect.x - collisions.rect.width
+            self.rect.x = int(self.pos.x)
+            self.rect.y = int(self.pos.y)
