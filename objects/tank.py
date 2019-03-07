@@ -1,24 +1,21 @@
 import pygame
 
-from pygame.sprite import Sprite
+from objects.game_object import GameObject
 from enums.control_enums import MoveDirection
 from objects.bullet import Bullet
 
 
-class Tank(Sprite):
+class Tank(GameObject):
     """Класс танка"""
 
     def __init__(self, controller, config):
         """Конфигурация танка находится в конфиг файле, тут только логика"""
-        super(Tank, self).__init__()
+        super(Tank, self).__init__(controller.screen, config['DEFAULT']['Image'])
         self.controller = controller
         self.bullet_model = controller.bullets_config[config['DEFAULT']['Bullet']]
 
         # Загрузка изображения танка и назначение атрибута rect
-        path = "res/" + config['DEFAULT']['Image']
-        self.original_image = pygame.image.load(path)
-        self.image = self.original_image
-        self.rect = self.image.get_rect()
+        self.original_image = self.image.copy()
 
         # Начальная координата танка
         self.rect.x = 0
@@ -74,10 +71,6 @@ class Tank(Sprite):
     def fire(self):
         """Производит выстрел в сторону направления танка"""
         Bullet(self.bullet_model, self, self.controller)
-
-    def render(self):
-        """Отрисовывает танк"""
-        self.controller.screen.blit(self.image, self.rect)
 
     def update(self):
         """Обновляет позицию, вызывает проверку коллизий"""
