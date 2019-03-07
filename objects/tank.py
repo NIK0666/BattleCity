@@ -2,7 +2,6 @@ import pygame
 
 from objects.game_object import GameObject
 from enums.control_enums import MoveDirection
-from objects.bullet import Bullet
 
 
 class Tank(GameObject):
@@ -70,7 +69,7 @@ class Tank(GameObject):
 
     def fire(self):
         """Производит выстрел в сторону направления танка"""
-        Bullet(self.bullet_model, self, self.controller)
+        self.controller.create_bullet(self, self.bullet_model)
 
     def update(self):
         """Обновляет позицию, вызывает проверку коллизий"""

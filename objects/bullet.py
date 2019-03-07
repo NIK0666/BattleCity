@@ -10,7 +10,6 @@ class Bullet(GameObject):
         super(Bullet, self).__init__(controller.screen, model['Image'])
         self.owner = owner
         self.controller = controller
-        self.level = self.controller.current_level
 
         if owner.see_direction == MoveDirection.UP:
             self.image = pygame.transform.rotate(self.image, 0)
@@ -39,7 +38,6 @@ class Bullet(GameObject):
 
         self.pos_x = float(self.rect.x)
         self.pos_y = float(self.rect.y)
-        self.level.bullets.add(self)
 
     def update(self):
         # Обновляем позицию пули

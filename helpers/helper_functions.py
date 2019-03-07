@@ -10,12 +10,12 @@ def get_subindex(_x, _y):
 
     if row == 0:
         if not col == 0:
-            return 3
+            return "Image_03"
         else:
-            return 1
+            return "Image_01"
 
     if col == 0:
         if not row == 0:
-            return 4
+            return "Image_04"
         else:
-            return 2
+            return "Image_02"

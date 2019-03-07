@@ -5,6 +5,7 @@ import configparser
 from objects.tank import Tank
 from objects.level import Level
 from enums.control_enums import MoveDirection
+from objects.bullet import Bullet
 
 
 class GameController:
@@ -41,6 +42,10 @@ class GameController:
 
         # Запускаем цикл обновления
         self.__game_loop()
+
+    def create_bullet(self, tank, model):
+        bullet = Bullet(model, tank, self)
+        self.current_level.bullets.add(bullet)
 
     def __game_loop(self):
         while True:
