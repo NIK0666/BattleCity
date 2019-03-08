@@ -2,14 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0c816c78-8e0c-406c-bf33-418fb77671b3" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/TestLevel.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configs/TestLevel.ini" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/configs/config.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configs/config.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/configs/surfaces.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configs/surfaces.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controllers/game_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/game_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/helpers/helper_functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/helpers/helper_functions.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/objects/level.py" beforeDir="false" afterPath="$PROJECT_DIR$/objects/level.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/res/sources/surface.psd" beforeDir="false" afterPath="$PROJECT_DIR$/res/sources/surface.psd" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/stage01.ini" beforeDir="false" afterPath="$PROJECT_DIR$/configs/stage01.ini" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,8 +40,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/configs/surfaces.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="731">
-              <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
+            <state relative-caret-position="578">
+              <caret line="46" column="20" lean-forward="true" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -64,8 +58,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/configs/config.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
+            <state relative-caret-position="85">
+              <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -94,11 +88,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/objects/level.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="269">
-              <caret line="109" column="30" lean-forward="true" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+            <state relative-caret-position="167">
+              <caret line="103" column="37" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="37" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -106,11 +100,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/configs/stage01.ini">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="41" lean-forward="true" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
+            <state relative-caret-position="170">
+              <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
             </state>
           </provider>
         </entry>
@@ -180,13 +174,13 @@
         <option value="$PROJECT_DIR$/objects/tank.py" />
         <option value="$PROJECT_DIR$/objects/bullet.py" />
         <option value="$PROJECT_DIR$/objects/surface.py" />
-        <option value="$PROJECT_DIR$/configs/stage01.ini" />
         <option value="$PROJECT_DIR$/helpers/helper_functions.py" />
         <option value="$PROJECT_DIR$/configs/surfaces.ini" />
-        <option value="$PROJECT_DIR$/configs/config.ini" />
         <option value="$PROJECT_DIR$/configs/TestLevel.ini" />
         <option value="$PROJECT_DIR$/controllers/game_controller.py" />
         <option value="$PROJECT_DIR$/objects/level.py" />
+        <option value="$PROJECT_DIR$/configs/config.ini" />
+        <option value="$PROJECT_DIR$/configs/stage01.ini" />
       </list>
     </option>
   </component>
@@ -343,8 +337,8 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32900432" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32900432" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.42424244" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32900432" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.42424244" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32900432" />
@@ -495,20 +489,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/configs/stage01.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="41" lean-forward="true" selection-start-line="5" selection-start-column="41" selection-end-line="5" selection-end-column="41" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configs/config.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="26" lean-forward="true" selection-start-line="7" selection-start-column="26" selection-end-line="7" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/objects/game_object.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -516,13 +496,6 @@
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/configs/surfaces.ini">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="731">
-          <caret line="43" column="7" lean-forward="true" selection-start-line="43" selection-start-column="7" selection-end-line="43" selection-end-column="7" />
         </state>
       </provider>
     </entry>
@@ -555,11 +528,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/objects/level.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="269">
-          <caret line="109" column="30" lean-forward="true" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+        <state relative-caret-position="167">
+          <caret line="103" column="37" selection-start-line="103" selection-start-column="30" selection-end-line="103" selection-end-column="37" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/surfaces.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="578">
+          <caret line="46" column="20" lean-forward="true" selection-start-line="46" selection-start-column="20" selection-end-line="46" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/config.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/configs/stage01.ini">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="25" selection-start-line="10" selection-start-column="25" selection-end-line="10" selection-end-column="25" />
         </state>
       </provider>
     </entry>
