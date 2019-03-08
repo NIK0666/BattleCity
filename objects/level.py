@@ -2,6 +2,7 @@ import pygame
 
 from pygame.sprite import Sprite
 from pygame.sprite import Group
+from pygame.rect import Rect
 from objects.surface import Surface
 from objects.surface import SurfaceCell
 from objects.spawn_anim import SpawnAnimation
@@ -42,32 +43,27 @@ class Level(Sprite):
         for surface in self.map_back.sprites():
             surface.render()
 
+        for surface in self.map.sprites():
+            surface.render()
+
         for bullet in self.bullets.sprites():
             bullet.render()
 
         self.controller.player.render()
 
-        for surface in self.map.sprites():
-            surface.render()
-
     def destruct_cell(self, surface, bullet):
         self.map.remove(surface)
         if surface.health == 4:
             # делим на 4 штуки
-            # TODO надо будет переделать, чтобы не создавались блоки если rect пересекается с пулей
-            c1 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 0)
-            c2 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 1)
-            c3 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 0)
-            c4 = self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 1)
 
-            if pygame.sprite.collide_rect(c1, bullet):
-                self.map.remove(c1)
-            if pygame.sprite.collide_rect(c2, bullet):
-                self.map.remove(c2)
-            if pygame.sprite.collide_rect(c3, bullet):
-                self.map.remove(c3)
-            if pygame.sprite.collide_rect(c4, bullet):
-                self.map.remove(c4)
+            if not helpers.intersects(Rect(surface.rect.x, surface.rect.y, 32, 32), bullet.rect):
+                self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 0)
+            if not helpers.intersects(Rect(surface.rect.x, surface.rect.y + 32, 32, 32), bullet.rect):
+                self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 0, 1)
+            if not helpers.intersects(Rect(surface.rect.x + 32, surface.rect.y, 32, 32), bullet.rect):
+                self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 0)
+            if not helpers.intersects(Rect(surface.rect.x + 32, surface.rect.y + 32, 32, 32), bullet.rect):
+                self.__create_surface_cell(surface.model, surface.rect.y // 64, surface.rect.x // 64, 1, 1)
 
         self.bullets.remove(bullet)
 
@@ -108,7 +104,7 @@ class Level(Sprite):
             self.map_back.add(surface)
 
     def __create_surface_cell(self, surface_model, row, col, subrow, subcol):
-        """Создание 'клетки' карты"""
+        """Создание маленькой 'клетки' карты"""
         surface = SurfaceCell(surface_model, self.screen, subrow * 1 + subcol * 2 + 1)
         pt = helpers.get_point(row, col, subrow, subcol)
         surface.rect.x = pt[0]
@@ -117,7 +113,6 @@ class Level(Sprite):
             self.map.add(surface)
         else:
             self.map_back.add(surface)
-        return surface
 
     def __get_surface_model(self, surface_type):
         """Получение данных о типе поверхности"""
