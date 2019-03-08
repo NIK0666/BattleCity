@@ -73,10 +73,11 @@ class GameController:
         if collisions:
             for bullet, surfaces in collisions.items():
                 for surface in surfaces:
-                    if surface.is_destructible:
-                        self.current_level.destruct_cell(surface, bullet)
-                    else:
-                        self.current_level.bullets.remove(bullet)
+                    if surface.is_blocks_bullets:
+                        if surface.is_destructible:
+                            self.current_level.destruct_cell(surface, bullet)
+                        else:
+                            self.current_level.bullets.remove(bullet)
 
         # Проверяем столкновение игрока с поверхностями карты
         collisions = pygame.sprite.spritecollideany(self.player, self.current_level.map)

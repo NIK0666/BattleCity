@@ -19,3 +19,9 @@ def get_subindex(_x, _y):
             return "Image_04"
         else:
             return "Image_02"
+
+
+def intersects(rect1, rect2):
+    clipped = rect1.clip(rect2)
+
+    return clipped.width > 0 or clipped.height > 0
