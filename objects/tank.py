@@ -10,9 +10,9 @@ class Tank(GameObject):
 
     def __init__(self, controller, config):
         """Конфигурация танка находится в конфиг файле, тут только логика"""
-        super(Tank, self).__init__(controller.screen, config['DEFAULT']['Image'])
+        super(Tank, self).__init__(controller.screen, config['Image'])
         self.controller = controller
-        self.bullet_model = controller.bullets_config[config['DEFAULT']['Bullet']]
+        self.bullet_model = controller.bullets_config[config['Bullet']]
 
         # Загрузка изображения танка и назначение атрибута rect
         self.original_image = self.image.copy()
@@ -25,7 +25,7 @@ class Tank(GameObject):
         self.pos = Pos(self.rect.x, self.rect.y)
 
         # Скорость танка
-        self.speed = float(config['DEFAULT']['Speed'])
+        self.speed = float(config['Speed'])
 
         # По умолчанию танк не движется
         self.direction = MoveDirection.NONE

@@ -5,7 +5,8 @@ from pygame.sprite import Group
 from pygame.rect import Rect
 from objects.surface import Surface
 from objects.surface import SurfaceCell
-from objects.spawn_anim import SpawnAnimation
+from enums.control_enums import MoveDirection
+from objects.tank import Tank
 import helpers.helper_functions as helpers
 
 
@@ -22,6 +23,7 @@ class Level(Sprite):
         self.map = Group()
         self.map_back = Group()
         self.animations = Group()
+        self.enemies = Group()
         self.bullets = Group()
         self.grid = []
         self.player_spawn = (0, 0)
@@ -33,7 +35,12 @@ class Level(Sprite):
         """Обновление состояний объектов уровня"""
         for bullet in self.bullets.sprites():
             bullet.update()
+
+        for enemy in self.enemies.sprites():
+            enemy.update()
+
         self.controller.player.update()
+        self.controller.ai_controller.update()
 
     def render(self):
         """Отрисовка уровня"""
@@ -48,6 +55,9 @@ class Level(Sprite):
 
         for bullet in self.bullets.sprites():
             bullet.render()
+
+        for enemy in self.enemies.sprites():
+            enemy.render()
 
         self.controller.player.render()
 
@@ -85,9 +95,15 @@ class Level(Sprite):
                     pt = helpers.get_point(row, col)
                     self.enemy_spawn_points.append(helpers.get_point(row, col))
 
-                    spawn_animation = SpawnAnimation(self.screen)
-                    spawn_animation.pt = pt
-                    self.animations.add(spawn_animation)
+                    tank = Tank(self.controller, self.controller.tanks_config['EnemyTank'])
+                    tank.pos.x = pt[0]
+                    tank.pos.y = pt[1]
+                    tank.move(MoveDirection.DOWN)
+                    tank.update()
+                    self.enemies.add(tank)
+                    # spawn_animation = SpawnAnimation(self.screen)
+                    # spawn_animation.pt = pt
+                    # self.animations.add(spawn_animation)
                 # Строим карту
                 elif not surface_type == "0":
                     self.__create_surface(surface_type, row, col)

@@ -6,6 +6,7 @@ from objects.tank import Tank
 from objects.level import Level
 from enums.control_enums import MoveDirection
 from objects.bullet import Bullet
+from controllers.ai_controller import AIController
 
 
 class GameController:
@@ -28,9 +29,10 @@ class GameController:
         self.bullets_config.read("configs/bullets.ini")
 
         # Создаем танк игрока
-        player_config = configparser.ConfigParser()
-        player_config.read("configs/" + config['DEFAULT']['PlayerTank'] + ".ini")
-        self.player = Tank(self, player_config)
+        self.tanks_config = configparser.ConfigParser()
+        self.tanks_config.read("configs/tanks.ini")
+        print(config['DEFAULT']['PlayerTank'])
+        self.player = Tank(self, self.tanks_config[config['DEFAULT']['PlayerTank']])
 
         # Распарсим с конфига доступные уровни
         self.levels = config['DEFAULT']['Levels'].split(',')
@@ -39,6 +41,8 @@ class GameController:
         level_config = configparser.ConfigParser()
         level_config.read("configs/" + self.levels[0] + ".ini")
         self.current_level = Level(level_config, self)
+
+        self.ai_controller = AIController()
 
         # Запускаем цикл обновления
         self.__game_loop()
